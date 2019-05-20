@@ -18,6 +18,8 @@ class Board:
         for row in self.board:
             print(row)
 
-board = Board(5)
+def main():
+    board = Board(5)
+    board.display_board()
 
-board.display_board()
+main()
