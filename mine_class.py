@@ -4,3 +4,5 @@ class Mines():
     #define constructor for mine board object
     def __init__(self):
         self.mines = []
+
+    
