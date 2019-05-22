@@ -1,10 +1,8 @@
 #this file is for the board class
+#import mine class
+from mine_class import *
 
-class Board(object):
-    #constructor to initialize a board for the object
-    def __init__(self, val):
-        self.board = []
-        self.size = val
+class Board:
 
     #create blank board for playing
     def create_blank_board(self):
@@ -14,12 +12,19 @@ class Board(object):
 
     #display the playing board
     def display_board(self):
-        self.board = self.create_blank_board(self)
         for row in self.board:
             print(row)
 
+
+
+    #################################################
+    #constructor to initialize a board for the object
+    def __init__(self, val = 5, board = []):
+        self.size = val
+        self.board = self.create_blank_board()
+
 def main():
-    board1 = Board(5)
-    board1.display_board(board1)
+    board1 = Board(10)
+    board1.display_board()
 
 main()
