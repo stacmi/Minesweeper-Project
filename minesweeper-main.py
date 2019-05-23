@@ -47,8 +47,8 @@ def load_game():
             else:
                 mines.append(list(line.rstrip()))
     return (board, mines, size)
-                
-    
+
+
 
 def create_blank_board(size):
     #generate blank board to be used
@@ -70,17 +70,17 @@ def create_mines(size):
             i += 1
         else:
             continue
-        
+
     return temp_board
 
 #prints the board
 def display_board(BOARD, size):
     toplabel = '  '
-        
+
     for i in range(size):
         toplabel = toplabel + str(i) + ' '
     print(toplabel)
-        
+
     i = 0
     for row in BOARD:
         print(i, *row, ' ')
@@ -196,11 +196,11 @@ def play_game(BOARD, MINES, size):
         except:
             print("invalid move")
             continue
-        
+
         if not not_a_mine(col, row, MINES):
             not_dead = False
         move_count += 1
-        
+
         if game_won_decider(move_count, size):
             break
 
@@ -214,8 +214,8 @@ def play_game(BOARD, MINES, size):
             quit()
         except:
             quit()
-        
-    
+
+
 
 #define the main function
 def main():
@@ -244,7 +244,7 @@ def main():
                 boardSize = input("What size of board would you like(only size 5-10): ")
                 board_size = int(boardSize)
                 print("")
-                
+
                 #check for errors
                 if board_size < MINIMUM_SIZE or board_size > MAXIMUM_SIZE:
                     print("Please enter a number between 5 and 10.")
@@ -265,7 +265,7 @@ def main():
 
         #play game
         play_game(BOARD, MINES, board_size)
-        
+
     elif option == 2:
         #call loading function
         try:
@@ -278,5 +278,5 @@ def main():
         display_board(BOARD, board_size)
         #play game
         play_game(BOARD, MINES, board_size)
-    
+
 main()

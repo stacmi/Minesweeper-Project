@@ -1,6 +1,5 @@
 #this file is for the board class
 #import mine class
-from mine_class import *
 
 class Board:
 
@@ -12,26 +11,56 @@ class Board:
 
     #display the playing board
     def display_board(self):
+        print("")
         for row in self.board:
             print(row)
 
+    #play the game
+    def play_game(self):
+        #prompt for difficulty
+        print("Would you like an easy game or a hard game?")
+        print()
 
+        self.display_board()
 
     #################################################
     #constructor to initialize a board for the object
     def __init__(self, val = 5, board = []):
         self.size = val
         self.board = self.create_blank_board()
-        self.mine = Mine(val, self.board)
 
 
-class Mine(Board):
+class Mine:
+    def create_mines(self):
+        pass
+
+    def create_mines(self):
+        i = 0
+        number_of_mines = size - 1
+
+        #generate mine board
+        while i != number_of_mines:
+            x = random.randint(0, size - 1)
+            y = random.randint(0, size - 1)
+            if temp_board[x][y] != 'X':
+                temp_board[x][y] = 'X'
+                i += 1
+            else:
+                continue
+
+        return temp_board
+
+    #for testing
+    #def display_board(self):
+    #    for row in self.mine_board:
+    #        print(row)
+
+
+
+
+    #################################################
     #define constructor for mine board object
-    def __init__(self, mines = []):
-        self.mines = self.create_blank_board()
-
-def main():
-    board1 = Board(10)
-    board1.display_board()
-
-main()
+    def __init__(self, var = 5, mines = []):
+        self.mines = var
+        self.mine_board = mines
+        self.display_board()
