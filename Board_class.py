@@ -22,6 +22,13 @@ class Board:
     def __init__(self, val = 5, board = []):
         self.size = val
         self.board = self.create_blank_board()
+        self.mine = Mine(val, self.board)
+
+
+class Mine(Board):
+    #define constructor for mine board object
+    def __init__(self, mines = []):
+        self.mines = self.create_blank_board()
 
 def main():
     board1 = Board(10)
