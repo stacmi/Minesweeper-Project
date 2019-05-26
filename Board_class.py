@@ -1,5 +1,6 @@
 #this file is for the board class
-#import mine class
+#import libraries
+import random
 
 class Board:
 
@@ -17,9 +18,22 @@ class Board:
 
     #play the game
     def play_game(self):
-        #prompt for difficulty
-        print("Would you like an easy game or a hard game?")
-        print()
+        while True:
+            #prompt for difficulty
+            print("Would you like an easy game or a hard game?")
+            print("     -Option 1: Easy")
+            print("     -Option 2: Hard")
+            option = input("Option: ")
+            #create board of mines based on Option
+            if option == "1":
+                self.mine_board = Mine(self.create_blank_board(), self.size, self.size)
+                break
+            elif option == "2":
+                self.mine_board = Mine(self.create_blank_board(), self.size, self.size * 2)
+                break
+            else:
+                print("Choose a valid option")
+                continue
 
         self.display_board()
 
@@ -31,36 +45,31 @@ class Board:
 
 
 class Mine:
-    def create_mines(self):
-        pass
+    #check the mine board
 
-    def create_mines(self):
+    #create the board for mines
+    def create_mines(self, size):
         i = 0
-        number_of_mines = size - 1
 
         #generate mine board
-        while i != number_of_mines:
+        while i != self.mines:
             x = random.randint(0, size - 1)
             y = random.randint(0, size - 1)
-            if temp_board[x][y] != 'X':
-                temp_board[x][y] = 'X'
+            if self.mine_board[x][y] != 'X':
+                self.mine_board[x][y] = 'X'
                 i += 1
             else:
                 continue
 
-        return temp_board
-
     #for testing
-    #def display_board(self):
-    #    for row in self.mine_board:
-    #        print(row)
-
-
-
+    def display_board(self):
+        for row in self.mine_board:
+            print(row)
 
     #################################################
     #define constructor for mine board object
-    def __init__(self, var = 5, mines = []):
+    def __init__(self, mines = [], size = 1, var = 1):
         self.mines = var
         self.mine_board = mines
+        self.create_mines(size)
         self.display_board()

@@ -50,9 +50,20 @@ def main():
                     break
             except:
                 print("Please enter a number")
+                print("")
 
         board = Board(boardSize)
         board.play_game()
+    elif option == 2:
+        try:
+            a = int("p")
+        except:
+            print("It appears that you do not have a valid save file.")
+            print("Please start a new game to play.")
+            print("")
+
+            #call main again to play the game
+            main()
 
 #run game
 main()
