@@ -12,9 +12,14 @@ class Board:
 
     #display the playing board
     def display_board(self):
-        print("")
+        i = 0
         for row in self.board:
-            print(row)
+            print(i, '| ' for char in row ,' | ')
+            i += 1
+
+    #place a move on the board
+    def place_move():
+        pass
 
     #play the game
     def play_game(self):
@@ -45,7 +50,8 @@ class Board:
 
 
 class Mine:
-    #check the mine board
+    #check the mine board in each direction
+
 
     #create the board for mines
     def create_mines(self, size):
@@ -62,9 +68,9 @@ class Mine:
                 continue
 
     #for testing
-    def display_board(self):
-        for row in self.mine_board:
-            print(row)
+    #def display_board(self):
+        #for row in self.mine_board:
+            #print(row)
 
     #################################################
     #define constructor for mine board object
@@ -72,4 +78,4 @@ class Mine:
         self.mines = var
         self.mine_board = mines
         self.create_mines(size)
-        self.display_board()
+        #self.display_board()
