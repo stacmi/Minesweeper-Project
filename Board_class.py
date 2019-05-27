@@ -22,9 +22,31 @@ class Board:
             print(i, *row)
             i += 1
 
+    #reveal the baord in case of mine placed
+    def reveal_board(self):
+        self.still_playing = False
+        for row in self.board:
+            for col in row:
+                if not self.mine_board.not_a_mine(row, col):
+                    self.board[row][col] = 'X'
+                else:
+                    continue
+
     #place a move on the board
-    def place_move():
-        pass
+    def place_move(self):
+        while True:
+            try:
+                row = int(input("Row: "))
+                col = int(input("Column: "))
+            except:
+                print("Please input a valid row and column")
+            if self.mine_board.not_a_mine(row, col):
+                self.board[row][col] = self.mine_board.mine_check(self.size, row, col)
+                break
+            else:
+                self.reveal_board()
+                print("You Lost")
+                break
 
     #save game
     def save_game(self):
@@ -41,7 +63,6 @@ class Board:
                     save.write('\n')
         except:
             print("Could not save game. EXITING...")
-            quit()
 
     #play the game
     def play_game(self):
@@ -63,27 +84,40 @@ class Board:
                     print("Choose a valid option")
                     continue
 
-        #give prompts to play game
         print("")
-        print("Would you like to:")
-        print("     Option 1: Place a Move")
-        print("     Option 2: Save and Quit")
-        print("     Option 3: Quit Without Saving")
-        print("==================================")
-        while True:
+        self.display_board()
+
+        #loop intil game finished
+        self.move_count = 0
+        while True and self.still_playing:
+            #give prompts to play game
+            print("")
+            print("Would you like to:")
+            print("     Option 1: Place a Move")
+            print("     Option 2: Save and Quit")
+            print("     Option 3: Quit Without Saving")
+            print("==================================")
             #collect input and perform operation
             option = input("Option: ")
             if option == "1":
-                break
+                try:
+                    self.place_move()
+                    self.move_count += 1
+                except:
+                    print("Placing move failed")
+                pass
             elif option == "2":
                 self.save_game()
-                quit()
                 break
             elif option == "3":
                 break
             else:
                 print("please choose a valid option")
-        self.display_board()
+            if not self.mine_board.game_won(self.move_count):
+                print(self.move_count)
+                print("You won")
+                break
+            self.display_board()
 
     #################################################
     #constructor to initialize a board for the object
@@ -91,8 +125,10 @@ class Board:
         if option == 1:
             self.option = option
             self.size = val
+            self.still_playing = True
             self.board = self.create_blank_board()
         else:
+            self.still_playing = True
             self.option = option
             self.size = val
             self.board = board
@@ -117,6 +153,82 @@ class Mine:
                 i += 1
             else:
                 continue
+
+    #game win counter
+    def game_won(self, move_count):
+        mine_count = 0
+        size_count = 0
+        for row in self.mine_board:
+            for cell in row:
+                if cell == "X":
+                    mine_count += 1
+                size_count += 1
+        if move_count == (size_count - mine_count):
+            return False
+        else:
+            return True
+
+    #mine check
+    def not_a_mine(self, row, col):
+        if self.mine_board[int(row)][int(col)] != 'X':
+            return True
+        else:
+            return False
+
+    #check for mines next to move
+    def mine_check(self, size, row, col):
+        mine_count = 0
+        try:
+            #check up
+            if mine_board[row - 1][col] == 'X' and row - 1 > -1:
+                mine_count += 1
+            #else:
+                #BOARD = place_move(col, row - 1, BOARD, mine_board, size)
+        except:
+            pass
+        try:
+            #check down
+            if mine_board[row + 1][col] == 'X' and row + 1 < (size - 1):
+                mine_count += 1
+        except:
+            pass
+        try:
+            #check left
+            if mine_board[row][col - 1] == 'X' and col - 1 > -1:
+                mine_count += 1
+        except:
+            pass
+        try:
+            #check right
+            if mine_board[row][col + 1] == 'X' and col + 1 < (size - 1):
+                mine_count += 1
+        except:
+            pass
+        try:
+            #check up right
+            if mine_board[row - 1][col + 1] == 'X' and (row - 1 > -1 and col + 1 < (size - 1)):
+                mine_count += 1
+        except:
+            pass
+        try:
+            #check down right
+            if mine_board[row + 1][col + 1] == 'X' and (row + 1 < (size - 1) and col + 1 < (size - 1)):
+                mine_count += 1
+        except:
+            pass
+        try:
+            #check up left
+            if mine_board[row - 1][col - 1] == 'X' and (row - 1 > -1 and col - 1 > -1):
+                mine_count += 1
+        except:
+            pass
+        try:
+            #check down left
+            if mine_board[row + 1][col - 1] == 'X' and (row + 1 < (size - 1) and col - 1 > -1):
+                mine_count += 1
+        except:
+            pass
+        return mine_count
 
     #for testing
     #def display_board(self):
