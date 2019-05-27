@@ -68,8 +68,9 @@ def main():
         board.play_game()
     elif option == "2":
         try:
-            board, mines, size = read_from_file()
+            board, mines, size = load_game()
             board = Board(size, board, mines, option)
+            board.play_game()
         except:
             print("It appears that you do not have a valid save file.")
             print("Please start a new game to play.")

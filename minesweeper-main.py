@@ -25,6 +25,7 @@ def save_game(BOARD, MINES, size):
                 for col in range(size):
                     save.write(str(MINES[row][col]))
                 save.write('\n')
+        quit()
     except:
         print("Could not save game. EXITING...")
         quit()
