@@ -2,6 +2,25 @@
 #import board class
 from Board_class import *
 
+#define function for reading from file
+def load_game():
+    x = -1
+    size = 0
+    board = []
+    mines = []
+    #iterate through the file and find pieces needed
+    with open("savegame.txt", "r") as load:
+        for line in load:
+            if x == -1:
+                size = int(line)
+                x +=1
+            elif x < size:
+                board.append(list(line.rstrip()))
+                x +=1
+            else:
+                mines.append(list(line.rstrip()))
+    return (board, mines, size)
+
 #define size contraints
 MINIMUM_SIZE = 5
 MAXIMUM_SIZE = 10
@@ -19,22 +38,15 @@ def main():
         print("    Option 1: Start a new game")
         print("    Option 2: Continue a saved game")
         print("========================================================")
-        temp = input("Option: ")
-
-        #test value
-        try:
-            option = int(temp)
-        except:
-            print("Please choose a valid option")
-            continue
+        option = input("Option: ")
 
         #if valid option continue the program
-        if option == 1 or option == 2:
+        if option == "1" or option == "2":
             break
         else:
             print("Please choose a valid option")
 
-    if option == 1:
+    if option == "1":
         #collect board size
         while True:
             try:
@@ -54,9 +66,10 @@ def main():
 
         board = Board(boardSize)
         board.play_game()
-    elif option == 2:
+    elif option == "2":
         try:
-            a = int("p")
+            board, mines, size = read_from_file()
+            board = Board(size, board, mines, option)
         except:
             print("It appears that you do not have a valid save file.")
             print("Please start a new game to play.")

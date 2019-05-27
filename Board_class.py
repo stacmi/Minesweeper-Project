@@ -12,9 +12,14 @@ class Board:
 
     #display the playing board
     def display_board(self):
+        top_label = '  '
+        for i in range(self.size):
+            top_label = top_label + str(i) + ' '
+        print(top_label)
+
         i = 0
         for row in self.board:
-            print(i, '| ' for char in row ,' | ')
+            print(i, *row)
             i += 1
 
     #place a move on the board
@@ -23,6 +28,7 @@ class Board:
 
     #play the game
     def play_game(self):
+
         while True:
             #prompt for difficulty
             print("Would you like an easy game or a hard game?")
@@ -44,9 +50,16 @@ class Board:
 
     #################################################
     #constructor to initialize a board for the object
-    def __init__(self, val = 5, board = []):
-        self.size = val
-        self.board = self.create_blank_board()
+    def __init__(self, val = 5, board = [], mines = [], option = 1):
+        if option == 1:
+            self.option = option
+            self.size = val
+            self.board = self.create_blank_board()
+        else:
+            self.option = option
+            self.size = val
+            self.board = board
+            self.mine_board = Mine(mines, option)
 
 
 class Mine:
@@ -74,8 +87,12 @@ class Mine:
 
     #################################################
     #define constructor for mine board object
-    def __init__(self, mines = [], size = 1, var = 1):
-        self.mines = var
-        self.mine_board = mines
-        self.create_mines(size)
+    def __init__(self, mines = [], size = 1, var = 1, option = 1):
+        if option == 1:
+            self.mines = var
+            self.mine_board = mines
+            self.create_mines(size)
+        else:
+            self.mine_board = mines
+
         #self.display_board()
