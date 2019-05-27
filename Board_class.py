@@ -41,17 +41,28 @@ class Board:
                 flag = input("Flag(y/n): ")
             except:
                 print("Please input a valid row and column")
-            #check parameters
-            if not self.mine_board.not_a_mine(row, col):
-                self.reveal_board()
-                print("You Lost")
+                continue
+            #change flag
+            if self.board[row][col] == 'F':
+                self.board[row][col] = '-'
                 break
-            else:
+
+            #check paramater
+            if self.board[row][col] == '-':
                 if not flag == 'y':
                     self.board[row][col] = self.mine_board.mine_check(self.size, row, col)
                 else:
                     self.board[row][col] = 'F'
+                    break
+                if not self.mine_board.not_a_mine(row, col):
+                    self.reveal_board()
+                    print("You Lost")
+                    break
+                #break out of loop
                 break
+            else:
+                print("Choose a different cell")
+                continue
 
     #save game
     def save_game(self):
