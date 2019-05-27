@@ -25,8 +25,8 @@ class Board:
     #reveal the baord in case of mine placed
     def reveal_board(self):
         self.still_playing = False
-        for row in self.board:
-            for col in row:
+        for row in range(self.size):
+            for col in range(self.size):
                 if not self.mine_board.not_a_mine(row, col):
                     self.board[row][col] = 'X'
                 else:
@@ -38,14 +38,19 @@ class Board:
             try:
                 row = int(input("Row: "))
                 col = int(input("Column: "))
+                flag = input("Flag(y/n): ")
             except:
                 print("Please input a valid row and column")
-            if self.mine_board.not_a_mine(row, col):
-                self.board[row][col] = self.mine_board.mine_check(self.size, row, col)
-                break
-            else:
+            #check parameters
+            if not self.mine_board.not_a_mine(row, col):
                 self.reveal_board()
                 print("You Lost")
+                break
+            else:
+                if not flag == 'y':
+                    self.board[row][col] = self.mine_board.mine_check(self.size, row, col)
+                else:
+                    self.board[row][col] = 'F'
                 break
 
     #save game
@@ -100,11 +105,11 @@ class Board:
             #collect input and perform operation
             option = input("Option: ")
             if option == "1":
-                try:
-                    self.place_move()
-                    self.move_count += 1
-                except:
-                    print("Placing move failed")
+            #try:
+                self.place_move()
+                self.move_count += 1
+            #except:
+                print("Placing move failed")
                 pass
             elif option == "2":
                 self.save_game()
@@ -180,7 +185,7 @@ class Mine:
         mine_count = 0
         try:
             #check up
-            if mine_board[row - 1][col] == 'X' and row - 1 > -1:
+            if self.mine_board[row - 1][col] == 'X' and row - 1 > -1:
                 mine_count += 1
             #else:
                 #BOARD = place_move(col, row - 1, BOARD, mine_board, size)
@@ -188,43 +193,43 @@ class Mine:
             pass
         try:
             #check down
-            if mine_board[row + 1][col] == 'X' and row + 1 < (size - 1):
+            if self.mine_board[row + 1][col] == 'X' and row + 1 < (size - 1):
                 mine_count += 1
         except:
             pass
         try:
             #check left
-            if mine_board[row][col - 1] == 'X' and col - 1 > -1:
+            if self.mine_board[row][col - 1] == 'X' and col - 1 > -1:
                 mine_count += 1
         except:
             pass
         try:
             #check right
-            if mine_board[row][col + 1] == 'X' and col + 1 < (size - 1):
+            if self.mine_board[row][col + 1] == 'X' and col + 1 < (size - 1):
                 mine_count += 1
         except:
             pass
         try:
             #check up right
-            if mine_board[row - 1][col + 1] == 'X' and (row - 1 > -1 and col + 1 < (size - 1)):
+            if self.mine_board[row - 1][col + 1] == 'X' and (row - 1 > -1 and col + 1 < (size - 1)):
                 mine_count += 1
         except:
             pass
         try:
             #check down right
-            if mine_board[row + 1][col + 1] == 'X' and (row + 1 < (size - 1) and col + 1 < (size - 1)):
+            if self.mine_board[row + 1][col + 1] == 'X' and (row + 1 < (size - 1) and col + 1 < (size - 1)):
                 mine_count += 1
         except:
             pass
         try:
             #check up left
-            if mine_board[row - 1][col - 1] == 'X' and (row - 1 > -1 and col - 1 > -1):
+            if self.mine_board[row - 1][col - 1] == 'X' and (row - 1 > -1 and col - 1 > -1):
                 mine_count += 1
         except:
             pass
         try:
             #check down left
-            if mine_board[row + 1][col - 1] == 'X' and (row + 1 < (size - 1) and col - 1 > -1):
+            if self.mine_board[row + 1][col - 1] == 'X' and (row + 1 < (size - 1) and col - 1 > -1):
                 mine_count += 1
         except:
             pass
